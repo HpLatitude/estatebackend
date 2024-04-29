@@ -22,7 +22,7 @@ function Chat({ chats }) {
 
   const handleOpenChat = async (id, receiver) => {
     try {
-      const res = await apiRequest("/chats/" + id);
+      const res = await apiRequest("/chats/" + id + `?token=${localstorage.getItem("token")}`);
       if (!res.data.seenBy.includes(currentUser.id)) {
         decrease();
       }
@@ -55,7 +55,7 @@ function Chat({ chats }) {
   useEffect(() => {
     const read = async () => {
       try {
-        await apiRequest.put("/chats/read/" + chat.id);
+        await apiRequest.put("/chats/read/" + chat.id + `?token=${localstorage.getItem("token")}`);
       } catch (err) {
         console.log(err);
       }
